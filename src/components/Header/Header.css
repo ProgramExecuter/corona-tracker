@@ -1,0 +1,15 @@
+.header {
+  height: 15vh;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.header__logo {
+  height: inherit;
+}
+
+.header__select {
+  width: 10vw;
+  height: 5vh;
+}
