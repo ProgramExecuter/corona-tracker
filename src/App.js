@@ -1,5 +1,22 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
+import { Line } from "react-chartjs-2";
+
+const data = {
+  labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+  datasets: [
+    {
+      label: "First dataset",
+      data: [33, 53, 85, 41, 44, 65],
+      fill: true,
+      backgroundColor: "rgba(75,192,192,0.2)",
+      borderColor: "rgba(75,192,192,1)",
+    },
+  ],
+  options: {
+    maintainAspectRatio: true,
+  },
+};
 
 ///
 // For sorting data
@@ -62,11 +79,9 @@ const App = () => {
   // Fetch historical data for graph
   ///
   const fetchHistoricalData = async (url, caseType) => {
-    console.log(url);
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
-        console.log("graph", graphData);
         setGraphData(data);
       })
       .catch((err) => console.log(err));
@@ -109,6 +124,7 @@ const App = () => {
       country == "all"
         ? "https://disease.sh/v3/covid-19/all"
         : `https://disease.sh/v3/covid-19/countries/${country}`;
+
     getData(url);
   }, [country]);
 
@@ -134,7 +150,6 @@ const App = () => {
           })}
         </select>
       </header>
-
       <div className="databox">
         <div
           className="databox__confirmed databox__child"
@@ -169,6 +184,10 @@ const App = () => {
           </span>
           <span className="secondary_count">+ {recovered.today}</span>
         </div>
+      </div>
+
+      <div className="graph">
+        <Line className="graph__lineGraph" data={data} />
       </div>
     </>
   );

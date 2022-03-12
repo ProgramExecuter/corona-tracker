@@ -66,3 +66,13 @@ body {
 .secondary_count {
   font-size: 1.25rem;
 }
+
+.graph {
+  width: 90vw;
+  height: 10vh;
+}
+
+.graph__lineGraph {
+  width: 10vw !important;
+  height: 10vh !important;
+}
