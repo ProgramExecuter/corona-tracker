@@ -2,22 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import { Line } from "react-chartjs-2";
 
-const data = {
-  labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-  datasets: [
-    {
-      label: "First dataset",
-      data: [33, 53, 85, 41, 44, 65],
-      fill: true,
-      backgroundColor: "rgba(75,192,192,0.2)",
-      borderColor: "rgba(75,192,192,1)",
-    },
-  ],
-  options: {
-    maintainAspectRatio: true,
-  },
-};
-
 ///
 // For sorting data
 ///
@@ -35,8 +19,9 @@ const sortData = (data) => {
 
 const App = () => {
   const [countries, setCountries] = useState([]);
-  const [country, setCountry] = useState(["all"]);
+  const [country, setCountry] = useState("all");
   const [graphData, setGraphData] = useState({});
+  const [finalGraphData, setFinalGraphData] = useState({});
 
   const [confirmed, setConfirmed] = useState({ total: "0", today: "0" });
   const [death, setDeath] = useState({ total: "0", today: "0" });
@@ -83,6 +68,40 @@ const App = () => {
       .then((response) => response.json())
       .then((data) => {
         setGraphData(data);
+
+        //
+        // Fetched Data
+        let fetchedData;
+
+        if (country === "all") {
+          fetchedData =
+            caseType == "cases"
+              ? data.cases
+              : caseType == "deaths"
+              ? data.deaths
+              : data.recovered;
+        } else {
+          fetchedData =
+            caseType == "cases"
+              ? data.timeline.cases
+              : caseType == "deaths"
+              ? data.timeline.deaths
+              : data.timeline.recovered;
+        }
+
+        // Filtering Data
+        let keys = Object.keys(fetchedData);
+        let vals = Object.values(fetchedData);
+
+        let tmpVals = [];
+        for (let i = 1; i < 30; ++i) {
+          tmpVals.push(vals[i] - vals[i - 1]);
+        }
+        keys = keys.slice(1, 30);
+        vals = tmpVals;
+
+        // Setting Data for Graph
+        setGraphData({ keys, vals });
       })
       .catch((err) => console.log(err));
   };
@@ -107,12 +126,33 @@ const App = () => {
   // Fetch historical data when changing caseType OR country
   ///
   useEffect(() => {
-    const url =
-      country == "all"
-        ? "https://disease.sh/v3/covid-19/historical/all"
-        : `https://disease.sh/v3/covid-19/historical/${country}`;
+    const url = `https://disease.sh/v3/covid-19/historical/${country}`;
 
     fetchHistoricalData(url, caseType);
+
+    // Final Graph Data Setup
+    setFinalGraphData({
+      labels: graphData.keys,
+      datasets: [
+        {
+          label: `${caseType}`,
+          data: graphData.vals,
+          fill: true,
+          backgroundColor:
+            caseType == "cases"
+              ? "#FEB546"
+              : caseType == "recovered"
+              ? "#90EE90"
+              : "#FF7376",
+          borderColor:
+            caseType == "cases"
+              ? "#B0350A"
+              : caseType == "recovered"
+              ? "#023020"
+              : "#8B0000",
+        },
+      ],
+    });
   }, [caseType, country]);
 
   ///
@@ -187,7 +227,7 @@ const App = () => {
       </div>
 
       <div className="graph">
-        <Line className="graph__lineGraph" data={data} />
+        <Line className="graph__lineGraph" data={finalGraphData} />
       </div>
     </>
   );
