@@ -3,14 +3,16 @@ import styles from "./App.module.css";
 
 import { Cards, Chart, CountryPicker } from "./components";
 
-const App = () => {
-  return (
-    <div className={styles.container}>
-      <Cards />
-      <CountryPicker />
-      <Chart />
-    </div>
-  );
-};
+class App extends React.Component {
+  render() {
+    return (
+      <div className={styles.container}>
+        <Cards />
+        <CountryPicker />
+        <Chart />
+      </div>
+    );
+  }
+}
 
 export default App;
