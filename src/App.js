@@ -1,11 +1,15 @@
 import React from "react";
-import "./App.css";
+import styles from "./App.module.css";
+
+import { Cards, Chart, CountryPicker } from "./components";
 
 const App = () => {
   return (
-    <>
-      <h1>Corona Tracker</h1>
-    </>
+    <div className={styles.container}>
+      <Cards />
+      <CountryPicker />
+      <Chart />
+    </div>
   );
 };
 
