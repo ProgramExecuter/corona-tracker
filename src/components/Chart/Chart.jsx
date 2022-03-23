@@ -33,7 +33,7 @@ const Chart = () => {
     };
     
     fetchAPI();
-  }, [dailyData]);
+  }, []);
 
   const lineChart = (
     dailyData.length
@@ -45,6 +45,7 @@ const Chart = () => {
             data: dailyData.map( ({confirmed}) => confirmed),
             label: 'Infected',
             borderColor: "#3333ff",
+            backgroundColor: "rgba(8, 8, 255, 0.5)",
             fill: true, 
           }, {
             data: dailyData.map( ({deaths}) => deaths),
