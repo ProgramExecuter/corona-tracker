@@ -5,6 +5,7 @@ import { Line, Bar } from 'react-chartjs-2';
 import styles from './Chart.module.css';
 import { fetchDailyData } from '../../api';
 
+// Register all chart components
 ChartJS.register(...registerables);
 
 const Chart = ({data: {confirmed, recovered, deaths}, country}) => {
@@ -20,6 +21,7 @@ const Chart = ({data: {confirmed, recovered, deaths}, country}) => {
     fetchAPI();
   }, []);
 
+  // For worldwide data, use LINECHART
   const lineChart = (
     dailyData.length
     ? (
@@ -48,6 +50,7 @@ const Chart = ({data: {confirmed, recovered, deaths}, country}) => {
         }}
       />)  :  null);
   
+  // For country-specific data use BARCHART
   const barChart = (
     confirmed
     ? (

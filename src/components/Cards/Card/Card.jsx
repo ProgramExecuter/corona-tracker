@@ -6,6 +6,8 @@ import cx from 'classnames';
 import styles from './Card.module.css';
 
 const CardComponent = ({ className, cardTitle, value, lastUpdate, cardSubtitle }) => {
+  const latestUpdateTime = new Date(lastUpdate).toDateString();
+
   return (
     <Grid item component={Card} xs={12} md={3} className={cx(styles.card, className)}>
       <CardContent>
@@ -13,7 +15,7 @@ const CardComponent = ({ className, cardTitle, value, lastUpdate, cardSubtitle }
         <Typography variant="h5">
           <CountUp start={0} end={value} duration={2.5} separator=',' />
         </Typography>
-        <Typography color="textSecondary">{new Date(lastUpdate).toDateString()}</Typography>
+        <Typography color="textSecondary">{latestUpdateTime}</Typography>
         <Typography variant='body2'>{cardSubtitle}</Typography>
       </CardContent>
     </Grid>

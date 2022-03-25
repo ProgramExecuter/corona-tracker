@@ -11,11 +11,13 @@ class App extends React.Component {
     country: "global",
   };
 
+  // When component mounts, get data
   async componentDidMount() {
     const data = await fetchData();
     this.setState({ data });
   }
 
+  // When country changes, fetch new data
   handleCountryChange = async (country) => {
     const data = await fetchData(country);
 

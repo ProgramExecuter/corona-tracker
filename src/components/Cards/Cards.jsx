@@ -1,10 +1,11 @@
 import React from 'react';
-import { Card, CardContent, Typography, Grid } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 
 import styles from './Cards.module.css';
 import CardComponent from './Card/Card';
 
 const Cards = ({data: {confirmed, deaths, recovered, lastUpdate}}) => {
+  // If the data is not loaded, we wait for data loading
   if(!confirmed) {
     return "Loading....";
   }
