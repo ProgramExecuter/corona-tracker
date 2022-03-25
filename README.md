@@ -1,6 +1,8 @@
 #### LIVE WEBSITE - [link](https://corona-tracker-amit.netlify.app/)
 
-https://user-images.githubusercontent.com/59532870/160075834-cab896c7-c40b-47e6-8b75-661a22996e15.mp4
+
+https://user-images.githubusercontent.com/59532870/160077073-e423288e-fcbc-4b2c-b9c5-e20cbf8896e0.mp4
+
 
 ## To Run this website on [localhost:3000](http://localhost:3000)
 
